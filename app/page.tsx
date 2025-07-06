@@ -8,6 +8,67 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Search, Quote } from "lucide-react"
 
+// Local quotes data organized by topics
+const quotesData = {
+  motivation: [
+    { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+    {
+      text: "Success is not final, failure is not fatal: it is the courage to continue that counts.",
+      author: "Winston Churchill",
+    },
+    { text: "Don't watch the clock; do what it does. Keep going.", author: "Sam Levenson" },
+    { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" },
+    { text: "It is during our darkest moments that we must focus to see the light.", author: "Aristotle" },
+  ],
+  success: [
+    { text: "Success is not the key to happiness. Happiness is the key to success.", author: "Albert Schweitzer" },
+    { text: "Success is walking from failure to failure with no loss of enthusiasm.", author: "Winston Churchill" },
+    { text: "The way to get started is to quit talking and begin doing.", author: "Walt Disney" },
+    { text: "Don't be afraid to give up the good to go for the great.", author: "John D. Rockefeller" },
+    { text: "Innovation distinguishes between a leader and a follower.", author: "Steve Jobs" },
+  ],
+  life: [
+    { text: "Life is what happens to you while you're busy making other plans.", author: "John Lennon" },
+    { text: "The purpose of our lives is to be happy.", author: "Dalai Lama" },
+    { text: "Life is 10% what happens to you and 90% how you react to it.", author: "Charles R. Swindoll" },
+    {
+      text: "In the end, we will remember not the words of our enemies, but the silence of our friends.",
+      author: "Martin Luther King Jr.",
+    },
+    { text: "Be yourself; everyone else is already taken.", author: "Oscar Wilde" },
+  ],
+  wisdom: [
+    { text: "The only true wisdom is in knowing you know nothing.", author: "Socrates" },
+    { text: "Yesterday is history, tomorrow is a mystery, today is a gift.", author: "Eleanor Roosevelt" },
+    { text: "A wise man learns more from his enemies than a fool from his friends.", author: "Baltasar Gracián" },
+    { text: "The journey of a thousand miles begins with one step.", author: "Lao Tzu" },
+    { text: "Knowledge speaks, but wisdom listens.", author: "Jimi Hendrix" },
+  ],
+  technology: [
+    { text: "Technology is best when it brings people together.", author: "Matt Mullenweg" },
+    {
+      text: "The advance of technology is based on making it fit in so that you don't really even notice it.",
+      author: "Bill Gates",
+    },
+    { text: "Any sufficiently advanced technology is indistinguishable from magic.", author: "Arthur C. Clarke" },
+    { text: "The real problem is not whether machines think but whether men do.", author: "B.F. Skinner" },
+    { text: "Technology is nothing. What's important is that you have a faith in people.", author: "Steve Jobs" },
+  ],
+  leadership: [
+    { text: "A leader is one who knows the way, goes the way, and shows the way.", author: "John C. Maxwell" },
+    { text: "The greatest leader is not necessarily the one who does the greatest things.", author: "Ronald Reagan" },
+    {
+      text: "Leadership is not about being in charge. It's about taking care of those in your charge.",
+      author: "Simon Sinek",
+    },
+    {
+      text: "A good leader takes a little more than his share of the blame, a little less than his share of the credit.",
+      author: "Arnold H. Glasow",
+    },
+    { text: "Before you are a leader, success is all about growing yourself.", author: "Jack Welch" },
+  ],
+}
+
 export default function Component() {
   const [topic, setTopic] = useState("")
 

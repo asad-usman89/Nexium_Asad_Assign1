@@ -71,6 +71,41 @@ const quotesData = {
 
 export default function Component() {
   const [topic, setTopic] = useState("")
+  const [displayedQuotes, setDisplayedQuotes] = useState<Array<{ text: string; author: string }>>([])
+  const [searchPerformed, setSearchPerformed] = useState(false)
+
+  const handleSearch = () => {
+    if (!topic.trim()) return
+
+    const normalizedTopic = topic.toLowerCase().trim()
+    const availableTopics = Object.keys(quotesData)
+
+    // Find matching topic (exact match or partial match)
+    let matchingTopic = availableTopics.find((t) => t === normalizedTopic)
+    if (!matchingTopic) {
+      matchingTopic = availableTopics.find((t) => t.includes(normalizedTopic) || normalizedTopic.includes(t))
+    }
+
+    if (matchingTopic) {
+      const topicQuotes = quotesData[matchingTopic as keyof typeof quotesData]
+      // Shuffle and take first 3 quotes
+      const shuffled = [...topicQuotes].sort(() => Math.random() - 0.5)
+      setDisplayedQuotes(shuffled.slice(0, 3))
+    } else {
+      // If no matching topic, show random quotes from all topics
+      const allQuotes = Object.values(quotesData).flat()
+      const shuffled = [...allQuotes].sort(() => Math.random() - 0.5)
+      setDisplayedQuotes(shuffled.slice(0, 3))
+    }
+
+    setSearchPerformed(true)
+  }
+
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch()
+    }
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -105,9 +140,10 @@ export default function Component() {
                   placeholder="e.g., motivation, success, life..."
                   value={topic}
                   onChange={(e) => setTopic(e.target.value)}
+                  onKeyPress={handleKeyPress}
                   className="flex-1"
                 />
-                <Button disabled={!topic.trim()}>
+                <Button onClick={handleSearch} disabled={!topic.trim()}>
                   <Search className="w-4 h-4 mr-2" />
                   Generate Quotes
                 </Button>

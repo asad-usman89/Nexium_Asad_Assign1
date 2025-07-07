@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
 import { Search, Quote } from "lucide-react"
 
 // Local quotes data organized by topics
@@ -74,10 +75,17 @@ export default function Component() {
   const [displayedQuotes, setDisplayedQuotes] = useState<Array<{ text: string; author: string }>>([])
   const [searchPerformed, setSearchPerformed] = useState(false)
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && topic.trim()) {
+      handleSearch();
+    }
+  };
+
   const handleSearch = () => {
     if (!topic.trim()) return
 
     const normalizedTopic = topic.toLowerCase().trim()
+
     const availableTopics = Object.keys(quotesData)
 
     // Find matching topic (exact match or partial match)
@@ -101,11 +109,7 @@ export default function Component() {
     setSearchPerformed(true)
   }
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      handleSearch()
-    }
-  }
+  const availableTopics = Object.keys(quotesData)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -148,9 +152,60 @@ export default function Component() {
                   Generate Quotes
                 </Button>
               </div>
+
+            {/* Available Topics */}
+            <div className="space-y-2">
+              <Label className="text-sm text-gray-600">Available Topics:</Label>
+              <div className="flex flex-wrap gap-2">
+                {availableTopics.map((topicName) => (
+                  <Badge
+                    key={topicName}
+                    variant="secondary"
+                    className="cursor-pointer hover:bg-indigo-100 hover:text-indigo-700 transition-colors"
+                    onClick={() => {
+                      setTopic(topicName)
+                      const topicQuotes = quotesData[topicName as keyof typeof quotesData]
+                      const shuffled = [...topicQuotes].sort(() => Math.random() - 0.5)
+                      setDisplayedQuotes(shuffled.slice(0, 3))
+                      setSearchPerformed(true)
+                    }}
+                  >
+                    {topicName}
+                  </Badge>
+                ))}
+              </div>
+            </div>
             </div>
           </CardContent>
         </Card>
+
+        {/* Quotes Display */}
+        {searchPerformed && (
+          <div className="space-y-6">
+            <div className="text-center">
+              <h2 className="text-2xl font-semibold text-gray-900 mb-2">Quotes {topic && `about "${topic}"`}</h2>
+              <p className="text-gray-600">Here are 3 inspiring quotes for you</p>
+            </div>
+
+            <div className="grid gap-6 md:grid-cols-1 lg:grid-cols-1">
+              {displayedQuotes.map((quote, index) => (
+                <Card key={index} className="shadow-md hover:shadow-lg transition-shadow">
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <Quote className="w-8 h-8 text-indigo-500 opacity-50" />
+                      <blockquote className="text-lg font-medium text-gray-900 leading-relaxed">
+                        &quot;{quote.text}&quot;
+                      </blockquote>
+                      <div className="flex items-center justify-end">
+                        <cite className="text-indigo-600 font-semibold">— {quote.author}</cite>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )

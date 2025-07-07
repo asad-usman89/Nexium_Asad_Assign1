@@ -75,11 +75,11 @@ export default function Component() {
   const [displayedQuotes, setDisplayedQuotes] = useState<Array<{ text: string; author: string }>>([])
   const [searchPerformed, setSearchPerformed] = useState(false)
 
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && topic.trim()) {
-      handleSearch();
+  const handleKeyPress = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearch()
     }
-  };
+  }
 
   const handleSearch = () => {
     if (!topic.trim()) return
@@ -120,7 +120,7 @@ export default function Component() {
             <h1 className="text-4xl font-bold text-gray-900">Quote Generator</h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Discover inspiring quotes by entering a topic.
+            Discover inspiring quotes by entering a topic. Get 3 carefully selected quotes to motivate and inspire you.
           </p>
         </div>
 
@@ -132,7 +132,7 @@ export default function Component() {
               Find Quotes by Topic
             </CardTitle>
             <CardDescription>
-              Enter a topic to find inspiring quotes
+              Enter a topic like motivation, success, life, wisdom, technology, or leadership
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -205,6 +205,20 @@ export default function Component() {
               ))}
             </div>
           </div>
+        )}
+
+        {/* Empty State */}
+        {!searchPerformed && (
+          <Card className="shadow-md">
+            <CardContent className="p-12 text-center space-y-4">
+              <Quote className="w-16 h-16 text-gray-300 mx-auto" />
+              <h3 className="text-xl font-semibold text-gray-600">Ready to Get Inspired?</h3>
+              <p className="text-gray-500 max-w-md mx-auto">
+                Enter a topic above or click on one of the available topics to discover amazing quotes that will
+                motivate and inspire you.
+              </p>
+            </CardContent>
+          </Card>
         )}
       </div>
     </div>

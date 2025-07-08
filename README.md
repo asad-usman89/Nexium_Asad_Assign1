@@ -4,6 +4,12 @@ Welcome to **Quote Generator** — a clean, interactive web app built to inspire
 
 ---
 
+## 🔗 Live Demo
+
+🌐 [View the App on Vercel](https://nexium-asad-assign1.vercel.app/)
+
+---
+
 ## 🌟 Why I Built This
 
 This project began with a simple purpose: to display **motivational quotes by topic**.
@@ -82,3 +88,20 @@ BS Computer Science, FAST NUCES Karachi
 > _“Consistency beats intensity. Small progress every day builds big momentum.”_
 
 ---
+
+## 📦 Installation & Setup
+
+To run this project locally:
+
+```bash
+# Clone the repository
+git clone https://github.com/asad-usman89/quote-generator.git
+
+# Navigate into the project directory
+cd quote-generator
+
+# Install dependencies
+npm install
+
+# Run the development server
+npm run dev
